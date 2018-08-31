@@ -14,7 +14,7 @@ public class Sudoku extends Application {
     public void start(Stage primaryStage) throws Exception {
         SudokuGame sudokuGame = new SudokuGame();
         primaryStage.setTitle("Sudoku");
-        primaryStage.setScene(sudokuGame.prepareGameBoard());
+        primaryStage.setScene(sudokuGame.prepareGameBoard(GameStatusIO.readConstGame()));
         primaryStage.show();
     }
 }

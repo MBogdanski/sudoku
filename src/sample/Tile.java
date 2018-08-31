@@ -7,6 +7,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 class Tile extends StackPane {
+    private int x;
+    private int y;
     private final int BORDER_SIZE = 1;
     private final int TILE_SIZE = 40;
     private boolean readOnly;
@@ -16,6 +18,8 @@ class Tile extends StackPane {
     private Text text = new Text();
 
     Tile(int x, int y, char value) {
+        this.x = x;
+        this.y = y;
         String text = Character.toString(value);
         if (text.equals("0")) {
             this.text.setText("");
@@ -33,8 +37,21 @@ class Tile extends StackPane {
         this.border.setVisible((selected));
         getChildren().addAll(border, cell, this.text);
         int BONUS_BORDER = 2;
-        setTranslateX(x * TILE_SIZE + BORDER_SIZE + BONUS_BORDER * (x / 3));
-        setTranslateY(y * TILE_SIZE + BORDER_SIZE + BONUS_BORDER * (y / 3));
+        setTranslateX(x * TILE_SIZE + BORDER_SIZE + BONUS_BORDER * (this.x / 3));
+        setTranslateY(y * TILE_SIZE + BORDER_SIZE + BONUS_BORDER * (this.y / 3));
+    }
+
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Text getText() {
+        return text;
     }
 
     void setSelected() {
@@ -45,6 +62,8 @@ class Tile extends StackPane {
     }
 
     void undoSelect() {
+        this.border.setStroke(Color.BLUE);
+        this.border.setFill(Color.BLUE);
         border.setVisible(false);
         cell.setWidth(TILE_SIZE - 2 * BORDER_SIZE);
         cell.setHeight(TILE_SIZE - 2 * BORDER_SIZE);
@@ -54,5 +73,17 @@ class Tile extends StackPane {
         if (!currentTile.readOnly) {
             text.setText(newText);
         }
+    }
+
+    public void setError() {
+        this.border.setStroke(Color.RED);
+        this.border.setFill(Color.RED);
+        this.text.setFill(Color.RED);
+    }
+
+    public void unSetError() {
+        this.text.setFill(Color.BLACK);
+        this.border.setStroke(Color.BLUE);
+        this.border.setFill(Color.BLUE);
     }
 }
